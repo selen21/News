@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <div class="card">
+    <img [src]="article?.urlToImage" class="card-img-top" alt="Haber Görseli"
+         style="height: 300px; object-fit: cover;" />
+
+    <div class="card-body">
+      <h2 class="card-title">{{ article?.title }}</h2>
+      <p class="card-text"><strong>Yazar:</strong> {{ article?.author || 'Bilinmiyor' }}</p>
+      <p class="card-text">{{ article?.content || article?.description }}</p>
+      
+      <a [href]="article?.url" target="_blank" class="btn btn-outline-primary mt-3">
+        Haberin Tamamını Oku
+      </a>
+
+      <button class="btn btn-secondary mt-3 ms-2" (click)="goBack()">Geri Dön</button>
+    </div>
+  </div>
+</div>
+
+
+<!--
+<div class="container mt-4">
+  <div class="card">
+    <img [src]="article.urlToImage" class="card-img-top" alt="..." style="height: 300px; object-fit: cover;">
+    <div class="card-body">
+      <h2 class="card-title">{{ article.title }}</h2>
+      <p class="card-text">{{ article.content }}</p>
+      <a [href]="article.url" target="_blank" class="btn btn-primary mt-2">Haberi Kaynaktan Oku</a>
+    </div>
+  </div>
+</div>-->
