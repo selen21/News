@@ -5,7 +5,8 @@ import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 
 const routes: Routes = [
   { path: '', component: NewsListComponent },
-  { path: 'news/:index', component: NewsDetailComponent }
+  { path: 'news/:encodedUrl', component: NewsDetailComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
@@ -13,3 +14,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+
