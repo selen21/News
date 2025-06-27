@@ -1,8 +1,41 @@
-<!-- Arama Kutusu ve Kategori Butonları -->
+<!-- Arama ve Kategori -->
+<div class="d-flex justify-content-between align-items-center mb-3">
+    
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Haber ara..."
+    [(ngModel)]="searchQuery"
+    (ngModelChange)="onSearchChange($event)"
+  />
+
+  <div class="btn-group ms-3" role="group">
+    <button class="btn btn-outline-primary" (click)="filterByCategory('business')">Business</button>
+    <button class="btn btn-outline-primary" (click)="filterByCategory('sports')">Sports</button>
+    <button class="btn btn-outline-primary" (click)="filterByCategory('technology')">Technology</button>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let article of articles; let i = index">
+      <!--<div class="card h-100" (click)="goToDetail(article)" appHighlight style="cursor: pointer;">-->
+      <div class="card h-100" (click)="goToDetail(article)" appHighlight>
+        <img [src]="article.urlToImage" class="card-img-top img-fluid" alt="..." style="height: 200px; object-fit: cover;" />
+        <div class="card-body">
+          <h5 class="card-title">{{ article.title }}</h5>
+          <p class="card-text">{{ article.description | shorten:100 }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- Arama Kutusu ve Kategori Butonları 
 <div class="container mt-4">
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
     
-    <!-- Arama Kutusu -->
+     Arama Kutusu 
     <input
       type="text"
       class="form-control w-100 w-md-50"
@@ -11,7 +44,7 @@
       (ngModelChange)="onSearchChange($event)"
     />
 
-    <!-- Kategori Butonları -->
+     Kategori Butonları 
     <div class="btn-group" role="group">
       <button class="btn btn-outline-primary" (click)="filterByCategory('business')">Business</button>
       <button class="btn btn-outline-primary" (click)="filterByCategory('sports')">Sports</button>
@@ -19,7 +52,7 @@
     </div>
   </div>
 
-  <!-- Haber Kartları -->
+   Haber Kartları 
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <div class="col" *ngFor="let article of articles; let i = index">
       <div class="card h-100 shadow-sm border-0" (click)="goToDetail(i)" appHighlight style="cursor: pointer;">
@@ -36,7 +69,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Arama ve Kategori -->
 <!-- <div class="d-flex justify-content-between align-items-center mb-3">

@@ -2,6 +2,66 @@ import { Component, OnInit } from '@angular/core';
 import { NewsService } from 'src/app/shared/news.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-news-list',
+  templateUrl: './news-list.component.html'
+})
+export class NewsListComponent implements OnInit {
+  articles: any[] = [];
+  searchQuery: string = '';
+  private searchSubject = new Subject<string>();
+
+  constructor(private newsService: NewsService, private router: Router) {}
+
+  ngOnInit(): void {
+    // İlk açılışta anasayfa haberlerini getir
+    this.getTopHeadlines();
+
+    // Arama inputundaki değişiklikleri dinle, 300ms bekle ve tekrar eden değerleri filtrele
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(query => this.newsService.searchArticles(query))
+    ).subscribe((data: any) => {
+      this.articles = data.articles;
+    });
+  }
+
+  onSearchChange(query: string) {
+    if (query.trim().length > 2) {
+      this.searchSubject.next(query);
+    } else {
+      this.getTopHeadlines();
+    }
+  }
+
+  getTopHeadlines() {
+    this.newsService.getTopHeadlines().subscribe((data: any) => {
+      this.articles = data.articles;
+    });
+  }
+
+  goToDetail(article: any) {
+    this.newsService.selectedArticle = article;
+    const encodedUrl = encodeURIComponent(article.url);
+    this.router.navigate(['/news', encodedUrl]);
+  }
+
+  filterByCategory(category: string) {
+    this.newsService.getByCategory(category).subscribe((data: any) => {
+      this.articles = data.articles;
+    });
+  }
+}
+
+
+
+/*import { Component, OnInit } from '@angular/core';
+import { NewsService } from 'src/app/shared/news.service';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { debounceTime, switchMap } from 'rxjs/operators';
 
 @Component({
@@ -48,16 +108,25 @@ export class NewsListComponent implements OnInit {
     });
   }
   
-  goToDetail(index: number) {
-    this.newsService.selectedArticle = this.articles[index];  // seçilen haberi ata
-    this.router.navigate(['/news', index]);                   // detay sayfasına git
-  }
+  goToDetail(article: any) {
+  this.newsService.selectedArticle = article;
+  this.router.navigate(['/news', encodeURIComponent(article.url)]);
+}
+
+  /*goToDetail(article: any) {
+  const encodedUrl = encodeURIComponent(article.url); // URL'yi encode et
+  this.router.navigate(['/news', encodedUrl]);        // URL ile detay sayfasına git
+}*/
+
   /*goToDetail(article: any) {
     // Haber URL'sini encode edip parametre olarak yolluyoruz
     const encodedUrl = encodeURIComponent(article.url);
     this.router.navigate(['/news', encodedUrl]);
   }*/
-}
+//}*/
+
+
+
 
 /*import { Component, OnInit } from '@angular/core';
 import { NewsService } from 'src/app/shared/news.service';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs/operators';
+//import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,9 @@ export class NewsService {
 
   selectedArticle: any = null;
 
+    // 🔹 Eklenecek satır:
+  lastSearchQuery: string = '';
+
   constructor(private http: HttpClient) {}
 
   getTopHeadlines(): Observable<any> {
@@ -18,8 +21,9 @@ export class NewsService {
       `${environment.apiUrl}/top-headlines?country=us&apiKey=${environment.apiKey}`
     );
   }
-
+  // 🔹 Bu fonksiyonun içeriği güncelleniyor:
   searchArticles(query: string): Observable<any> {
+    this.lastSearchQuery = query;
     return this.http.get(
       `${environment.apiUrl}/everything?q=${query}&apiKey=${environment.apiKey}`
     );
