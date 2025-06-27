@@ -28,10 +28,15 @@ export class NewsListComponent implements OnInit {
     description: 'Güneşli'
   };
 
+  // 🔸 Tarih ve saat için değişkenler
+  currentDate: string = '';
+  currentTime: string = '';
+
   constructor(private newsService: NewsService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadTopHeadlines();
+    this.startClock(); // ⏰ Saat başlasın
 
     this.searchSubject.pipe(
       debounceTime(300),
@@ -41,6 +46,18 @@ export class NewsListComponent implements OnInit {
       this.articles = data.articles;
       this.updateSliderArticles();
     });
+  }
+
+  startClock() {
+    setInterval(() => {
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      };
+
+      this.currentDate = now.toLocaleDateString('tr-TR', options);
+      this.currentTime = now.toLocaleTimeString('tr-TR');
+    }, 1000);
   }
 
   loadTopHeadlines() {
@@ -78,6 +95,7 @@ export class NewsListComponent implements OnInit {
     this.router.navigate(['/news', encodedUrl]);
   }
 }
+
 
 
 

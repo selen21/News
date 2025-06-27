@@ -6,15 +6,40 @@ $background-light: #ffaa60;
 $text-dark: #4e3c2e;
 $text-muted: #757575;
 
-header {
-  text-align: center;
-  padding: 1rem 0;
+.header-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: $background-light;
+  padding: 1rem;
+
+  .datetime-header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.9rem;
+    color: $text-dark;
+    text-align: left;
+
+    .date {
+      color: $primary-orange-dark;
+      color: $text-dark;
+    }
+
+    .time {
+      font-weight: bold;
+      color: $primary-orange-dark;
+    }
+  }
 
   .main-title {
+    text-align: center;
     font-size: 2.5rem;
     font-weight: bold;
     color: $primary-orange-dark;
+    margin: 0 auto;
+    padding: 1.5rem 0; // Başlık yüksekliği için biraz boşluk
   }
 }
 
@@ -223,4 +248,5 @@ header {
     }
   }
 }
+
 
