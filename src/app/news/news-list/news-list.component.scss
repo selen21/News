@@ -53,6 +53,10 @@ header {
     display: flex;
     animation: slideAnimation 20s linear infinite;
 
+    // EKLENEN KISIM BURASI
+    will-change: transform;
+    // pointer-events: auto; // Zaten varsayılan
+
     .slide {
       min-width: 300px;
       margin-right: 1rem;
@@ -60,6 +64,11 @@ header {
       box-shadow: 0 4px 8px rgba(255, 111, 0, 0.3);
       background: rgb(255, 208, 167);
       transition: box-shadow 0.3s ease;
+
+      // EKLENEN KISIM BURASI
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
 
       &:hover {
         box-shadow: 0 6px 15px rgba(255, 111, 0, 0.5);

@@ -70,6 +70,7 @@ export class NewsListComponent implements OnInit {
 
 
 
+
 /*import { Component, OnInit } from '@angular/core';
 import { NewsService } from 'src/app/shared/news.service';
 import { Router } from '@angular/router';
