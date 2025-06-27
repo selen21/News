@@ -15,6 +15,19 @@ export class NewsListComponent implements OnInit {
   activeCategory = '';
   private searchSubject = new Subject<string>();
 
+  // 🔸 Eklenen veriler
+  exchangeRates = [
+    { code: 'USD', rate: 32.50 },
+    { code: 'EUR', rate: 35.20 },
+    { code: 'GBP', rate: 41.10 }
+  ];
+
+  weather = {
+    city: 'İstanbul',
+    temp: 28,
+    description: 'Güneşli'
+  };
+
   constructor(private newsService: NewsService, private router: Router) { }
 
   ngOnInit(): void {
@@ -61,11 +74,11 @@ export class NewsListComponent implements OnInit {
 
   goToDetail(article: any) {
     this.newsService.selectedArticle = article;
-    // URL encode et
     const encodedUrl = encodeURIComponent(article.url);
     this.router.navigate(['/news', encodedUrl]);
   }
 }
+
 
 
 

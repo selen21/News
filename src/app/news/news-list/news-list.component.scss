@@ -52,10 +52,7 @@ header {
   .slider-wrapper {
     display: flex;
     animation: slideAnimation 20s linear infinite;
-
-    // EKLENEN KISIM BURASI
     will-change: transform;
-    // pointer-events: auto; // Zaten varsayılan
 
     .slide {
       min-width: 300px;
@@ -64,8 +61,6 @@ header {
       box-shadow: 0 4px 8px rgba(255, 111, 0, 0.3);
       background: rgb(255, 208, 167);
       transition: box-shadow 0.3s ease;
-
-      // EKLENEN KISIM BURASI
       cursor: pointer;
       position: relative;
       z-index: 1;
@@ -113,6 +108,40 @@ header {
     flex-shrink: 0;
     box-shadow: 0 0 8px rgba(230, 140, 0, 0.3);
     color: $text-dark;
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: $primary-orange-dark;
+      border-bottom: 1px solid rgba(101, 44, 0, 0.3);
+      padding-bottom: 0.3rem;
+    }
+
+    ul,
+    .weather {
+      font-size: 0.95rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li,
+      div {
+        margin-bottom: 0.4rem;
+      }
+    }
+
+    .weather {
+      .temp {
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+
+      .desc {
+        font-size: 1rem;
+        font-style: italic;
+        color: $text-muted;
+      }
+    }
   }
 
   .left {
@@ -194,3 +223,4 @@ header {
     }
   }
 }
+

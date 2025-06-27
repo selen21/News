@@ -20,7 +20,12 @@
 
 <main class="content-area">
   <aside class="side left">
-    <!-- Buraya takvim, kur gibi sol içerik ekleyebilirsin -->
+    <h4>Döviz Kurları</h4>
+    <ul>
+      <li *ngFor="let item of exchangeRates">
+        {{ item.code }}: {{ item.rate | number:'1.2-2' }} ₺
+      </li>
+    </ul>
   </aside>
 
   <section class="main-news">
@@ -46,9 +51,14 @@
   </section>
 
   <aside class="side right">
-    <!-- Buraya sağ taraf için ek bilgiler koyabilirsin -->
+    <h4>Hava Durumu</h4>
+    <div *ngIf="weather">
+      <p>{{ weather.city }}</p>
+      <p>{{ weather.temp }}°C - {{ weather.description }}</p>
+    </div>
   </aside>
 </main>
+
 
 
 
