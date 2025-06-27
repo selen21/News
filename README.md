@@ -1,27 +1,95 @@
-# NewsApp
+Haber Porta(ka)lı 🍊
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
+Angular ile geliştirilmiş, şık ve kullanıcı dostu bir haber portalı uygulamasıdır. Gerçek zamanlı haber listesi, kategori filtreleme, arama özelliği, slider, döviz kurları, hava durumu ve güncel saat bilgisi gibi özellikler içerir.
 
-## Development server
+📌 Özellikler
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+📰 Güncel Haberler – Anasayfada listelenir
 
-## Code scaffolding
+🔍 Canlı Arama – Başlığa göre debounce özelliğiyle hızlı filtreleme
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+🧫 Kategori Seçimi – Business, Sports, Technology kategorileri
 
-## Build
+🎮 Haber Slider – Öne çıkan ilk 10 haber kayan şekilde gösterilir
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+🗓️ Güncel Tarih & Saat – Sol üst köşede sürekli güncellenir
 
-## Running unit tests
+💱 Döviz Kurları – USD, EUR ve GBP kurları statik olarak sol panelde gösterilir
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+☀️ Hava Durumu – İstanbul için örnek hava durumu bilgisi sağ panelde gösterilir
 
-## Running end-to-end tests
+💅 Modern Tasarım – SCSS ile responsive ve renk uyumlu tasarım
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+⚙️ Kurulum
 
-## Further help
+git clone https://github.com/Selen21/news.git
+cd haber-portali
+npm install
+ng serve
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Uygulama localhost:4200 adresinde çalışacaktır.
+
+🗂️ Proje Yapısı
+
+src/
+├── app/
+│   ├── news-list/         → Ana sayfa (haber listesi, arama, slider)
+│   ├── news-detail/       → Detay sayfası
+│   ├── shared/            → Servisler (news.service.ts)
+│   └── app-routing.module.ts
+├── assets/
+│   ├── styles/            → SCSS değişkenler ve genel stiller
+│   └── screenshots/       → Uygulama ekran görüntüleri (örnek: homepage.png, slider.png)
+├── environments/
+│   └── environment.ts     → API anahtarı vs.
+├── index.html
+└── styles.scss
+
+🔄 Son Güncellemeler
+
+✅ Slider haberler tıklanabilir hale getirildi
+
+✅ Detay sayfasına yönlendirme eklendi
+
+✅ Sol panel: Döviz kurları (statik)
+
+✅ Sağ panel: İstanbul hava durumu (statik)
+
+✅ Sol üst köşeye tarih & saat eklendi
+
+✅ Tasarım detayları iyileştirildi
+
+🌐 Kullanılan Teknolojiler
+
+Angular 16+
+
+TypeScript
+
+RxJS
+
+SCSS
+
+Angular Router
+
+HTML5 / Flexbox
+
+👩‍💻 Geliştirici
+
+Selen Korkmaz 
+
+GitHub: github.com/selen-korkmazLinkedIn: linkedin.com/in/selen-korkmaz
+
+📌 Notlar
+
+Döviz kurları ve hava durumu statik olarak gösterilmektedir.
+
+Dilersen bu verileri API (exchangerate-api.com, openweathermap.org vb.) ile dinamik hale getirebilirsin.
+
+ 📸 Görseller
+
+ Ana Sayfa
+![Ana Sayfa](assets/screenshots/Anasayfa.png)
+
+ Detay Sayfası
+![Detay Sayfaları](assets/screenshots/Detaysayfasi.png)
+
