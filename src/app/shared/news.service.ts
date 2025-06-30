@@ -8,10 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class NewsService {
-
   selectedArticle: any = null;
-
-    // 🔹 Eklenecek satır:
   lastSearchQuery: string = '';
 
   constructor(private http: HttpClient) {}
@@ -21,7 +18,7 @@ export class NewsService {
       `${environment.apiUrl}/top-headlines?country=us&apiKey=${environment.apiKey}`
     );
   }
-  // 🔹 Bu fonksiyonun içeriği güncelleniyor:
+
   searchArticles(query: string): Observable<any> {
     this.lastSearchQuery = query;
     return this.http.get(
@@ -35,6 +32,14 @@ export class NewsService {
     );
   }
 
+  getExchangeRates(): Observable<any> {
+    return this.http.get<any>('https://api.frankfurter.app/latest?from=TRY&to=USD,EUR,GBP');
+  }
+
+  getWeather(city: string = 'Istanbul'): Observable<any> {
+    const apiKey = '643ac7282d0e52952fa45e3956f16b65';
+    return this.http.get<any>(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=tr`);
+  }
 
 
   /*getArticleByUrl(url: string): Observable<any> {

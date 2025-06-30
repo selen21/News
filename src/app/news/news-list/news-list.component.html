@@ -30,11 +30,12 @@
 <main class="content-area">
   <aside class="side left">
     <h4>Döviz Kurları</h4>
-    <ul>
-      <li *ngFor="let item of exchangeRates">
-        {{ item.code }}: {{ item.rate | number:'1.2-2' }} ₺
-      </li>
-    </ul>
+    <div class="exchange-card" *ngFor="let item of exchangeRates">
+      <img [src]="'assets/flags/' + item.code.toLowerCase() + '.svg'" [alt]="item.code" />
+        <div>
+            <strong>{{ item.code }}</strong>: {{ item.rate | number:'1.2-2' }} ₺
+        </div>
+    </div>
   </aside>
 
   <section class="main-news">
@@ -61,15 +62,19 @@
 
   <aside class="side right">
     <h4>Hava Durumu</h4>
-    <div *ngIf="weather">
-      <p>{{ weather.city }}</p>
-      <p>{{ weather.temp }}°C - {{ weather.description }}</p>
+    <div *ngIf="weather" class="weather-info">
+      <div class="weather-text">
+        <p>{{ weather.city }}</p>
+        <p>{{ weather.temp }}°C - {{ weather.description }}</p>
+      </div>
+      <img
+        class="weather-icon"
+        [src]="'https://openweathermap.org/img/wn/' + weather.icon + '@2x.png'"
+        [alt]="weather.description"
+      />
     </div>
   </aside>
 </main>
-
-
-
 
 
 

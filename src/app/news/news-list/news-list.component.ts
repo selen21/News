@@ -16,16 +16,18 @@ export class NewsListComponent implements OnInit {
   private searchSubject = new Subject<string>();
 
   // 🔸 Eklenen veriler
+  //exchangeRates: any[] = []; 
+  //exchangeRates: { code: string; rate: number }[] = [];
   exchangeRates = [
-    { code: 'USD', rate: 32.50 },
-    { code: 'EUR', rate: 35.20 },
-    { code: 'GBP', rate: 41.10 }
-  ];
-
-  weather = {
-    city: 'İstanbul',
-    temp: 28,
-    description: 'Güneşli'
+    { code: 'usd', rate: 32.5 },
+    { code: 'eur', rate: 35.7 },
+    { code: 'gbp', rate: 41.3 }
+  ];  
+  
+  weather: any = {
+    city: '',
+    temp: 0,
+    description: ''
   };
 
   // 🔸 Tarih ve saat için değişkenler
@@ -33,10 +35,12 @@ export class NewsListComponent implements OnInit {
   currentTime: string = '';
 
   constructor(private newsService: NewsService, private router: Router) { }
-
+  
   ngOnInit(): void {
     this.loadTopHeadlines();
     this.startClock(); // ⏰ Saat başlasın
+    this.loadExchangeRates();
+    this.loadWeather();
 
     this.searchSubject.pipe(
       debounceTime(300),
@@ -93,6 +97,36 @@ export class NewsListComponent implements OnInit {
     this.newsService.selectedArticle = article;
     const encodedUrl = encodeURIComponent(article.url);
     this.router.navigate(['/news', encodedUrl]);
+  }
+  
+  loadExchangeRates() {
+    this.newsService.getExchangeRates().subscribe((data) => {
+      const rates = data.rates;
+      this.exchangeRates = Object.keys(rates).map(code => ({
+        code,
+        rate: rates[code]
+      }));
+    });
+  }
+  /*loadExchangeRates() {
+    this.newsService.getExchangeRates().subscribe(data => {
+      this.exchangeRates = [
+        { code: 'USD', rate: 1 / data.rates.USD },
+        { code: 'EUR', rate: 1 / data.rates.EUR },
+        { code: 'GBP', rate: 1 / data.rates.GBP }
+      ];
+    });
+  }*/
+
+  loadWeather() {
+    this.newsService.getWeather().subscribe((data: any) => {
+      this.weather = {
+        city: data.name,
+        temp: Math.round(data.main.temp),
+        description: data.weather[0].description,
+        icon: data.weather[0].icon //iconu aldık
+      };
+    });
   }
 }
 

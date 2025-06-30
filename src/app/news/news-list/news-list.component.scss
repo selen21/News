@@ -167,6 +167,45 @@ $text-muted: #757575;
         color: $text-muted;
       }
     }
+
+    .weather-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        .weather-text {
+            flex: 1;
+        }
+
+        .weather-icon {
+            width: 128px;
+            height: 128px;
+            flex-shrink: 0;
+        }
+    }
+  }
+
+  // BURAYA EKLE 👇
+  .exchange-card {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.4);
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+
+    div {
+      font-size: 0.95rem;
+      color: $text-dark;
+    }
   }
 
   .left {
