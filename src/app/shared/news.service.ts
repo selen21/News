@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { of } from 'rxjs'; // Üste ekle!
 //import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -20,6 +21,10 @@ export class NewsService {
   }
 
   searchArticles(query: string): Observable<any> {
+    if (!query || query.trim() === '') {
+      // Boş sorgu yapılmasın, boş bir liste dön
+      return of({ articles: [] });
+    }
     this.lastSearchQuery = query;
     return this.http.get(
       `${environment.apiUrl}/everything?q=${query}&apiKey=${environment.apiKey}`
@@ -41,7 +46,9 @@ export class NewsService {
     return this.http.get<any>(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}&lang=tr`);
   }
 
-
+  getTopHeadlinesByCountry(countryCode: string) {
+    return this.http.get(`https://newsapi.org/v2/top-headlines?country=${countryCode}&apiKey=1dc8a65792814bfeb1b8c6345448e1ef`);
+  }
   /*getArticleByUrl(url: string): Observable<any> {
     return this.http.get(
       `${environment.apiUrl}/everything?q="${url}"&apiKey=${environment.apiKey}`

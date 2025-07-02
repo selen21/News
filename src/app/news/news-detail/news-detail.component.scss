@@ -1,9 +1,107 @@
+$primary-orange: #652c00;
+$primary-orange-light: #f58210;
+$primary-orange-dark: #E65100;
+$background-light: #ffaa60;
+$text-dark: #4e3c2e;
+$text-muted: #757575;
+
 .news-detail {
-  background-color: #ffaa60 !important;  // Açık turuncu ton
+  background-color: #ffaa60 !important;
   min-height: 100vh;
   padding: 2rem;
   width: 100%;
   box-sizing: border-box;
+
+  .detail-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .main-detail {
+    flex: 1 1 65%;
+  }
+
+  .side-news {
+    flex: 1 1 30%;
+    background-color: rgb(255, 208, 167);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(230, 140, 0, 0.2);
+
+    h3 {
+      font-size: 1.8rem;
+      color: $primary-orange-dark;
+      border-bottom: 2px solid rgba(230, 140, 0, 0.3);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .side-news-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+      &:hover {
+        background-color: $primary-orange-light;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 111, 0, 0.2);
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+
+      p {
+        flex: 1;
+        margin: 0;
+        font-size: 0.95rem;
+        color: $text-dark;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .header-container {
+    position: relative;
+    text-align: center;
+    background-color: $background-light;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(230, 140, 0, 0.2);
+
+    .datetime-header {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 0.9rem;
+      color: $text-dark;
+
+      .time {
+        font-weight: bold;
+        color: $primary-orange-dark;
+      }
+    }
+
+    .main-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: $primary-orange-dark;
+      margin: 0;
+    }
+  }
 
   .card {
     background-color: rgb(255, 208, 167);
@@ -24,13 +122,13 @@
   .card-title {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #652c00; // Koyu turuncu / kahverengi
+    color: #652c00;
   }
 
   .card-text {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: #4e3c2e; // Koyu kahverengi
+    color: #4e3c2e;
   }
 
   .text-muted {
@@ -52,4 +150,6 @@
     transform: translateY(0);
   }
 }
+
+
 

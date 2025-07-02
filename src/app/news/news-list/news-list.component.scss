@@ -18,7 +18,7 @@ $text-muted: #757575;
     position: absolute;
     top: 10px;
     left: 10px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: $text-dark;
     text-align: left;
 
@@ -132,10 +132,10 @@ $text-muted: #757575;
     flex-grow: 0;
     flex-shrink: 0;
     box-shadow: 0 0 8px rgba(230, 140, 0, 0.3);
-    color: $text-dark;
+    color: $primary-orange-dark;
 
     h3 {
-      font-size: 1.2rem;
+      font-size: 2rem;
       margin-bottom: 0.5rem;
       color: $primary-orange-dark;
       border-bottom: 1px solid rgba(101, 44, 0, 0.3);
@@ -153,9 +153,7 @@ $text-muted: #757575;
       div {
         margin-bottom: 0.4rem;
       }
-    }
-
-    .weather {
+      
       .temp {
         font-size: 1.8rem;
         font-weight: bold;
@@ -173,9 +171,11 @@ $text-muted: #757575;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
+        margin-bottom: 1rem;
 
         .weather-text {
             flex: 1;
+            color: $text-dark;
         }
 
         .weather-icon {
@@ -188,7 +188,7 @@ $text-muted: #757575;
 
   // BURAYA EKLE 👇
   .exchange-card {
-    display: flex;
+    display: flex; 
     align-items: center;
     gap: 0.5rem;
     background: rgba(255, 255, 255, 0.4);
@@ -220,6 +220,86 @@ $text-muted: #757575;
     flex-basis: 60%;
     display: flex;
     flex-direction: column;
+    
+    .search-bar-row {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+
+      .search-input {
+        margin-bottom: 1rem;
+        align-self: center;
+        width: 100%;
+        max-width: 400px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        border: 2px solid $primary-orange-light;
+        border-radius: 25px;
+        background: rgb(255, 208, 167);
+        color: $text-dark;
+        transition: border-color 0.3s ease;
+    
+        &:focus {
+          outline: none;
+          border-color: $primary-orange-dark;
+          box-shadow: 0 0 8px $primary-orange-light;
+        }
+      }  
+        
+      .country-filter {
+        position: relative;
+        min-width: 200px;
+        max-width: 300px;
+        flex: 1;
+
+        input {
+          width: 100%;
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          border: 2px solid $primary-orange-light;
+          border-radius: 25px;
+          background: rgb(255, 208, 167);
+          color: $text-dark;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-orange-dark;
+            box-shadow: 0 0 8px $primary-orange-light;
+          }
+        }
+        
+        .country-dropdown {
+          position: absolute;
+          top: 105%;
+          left: 0;
+          right: 0;
+          max-height: 200px;
+          overflow-y: auto;
+          background: rgb(255, 208, 167);
+          border: 1px solid $primary-orange;
+          z-index: 100;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          border-radius: 10px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+          li {
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            color: $text-dark;
+
+            &:hover {
+              background-color: $primary-orange-light;
+              color: white;
+            }
+          }
+        }
+      }
+    }
 
     .search-input {
       background: rgb(255, 208, 167);

@@ -9,6 +9,9 @@ import { NewsService } from 'src/app/shared/news.service';
 })
 export class NewsDetailComponent implements OnInit {
   article: any;
+  recommendedArticles: any[] = [];
+  currentDate: string = '';
+  currentTime: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -19,6 +22,12 @@ export class NewsDetailComponent implements OnInit {
   ngOnInit(): void {
     // Öncelikle servis üzerinden seçilmiş haberi al
     this.article = this.newsService.selectedArticle;
+
+    this.newsService.getTopHeadlines().subscribe((data: any) => {
+      this.recommendedArticles = data.articles
+        .filter((item: any) => item.url !== this.article?.url) // kendisini çıkar
+        .slice(0, 10); // ilk 10 taneyi al
+      });
 
     if (this.article) {
       // Eğer servis üzerinden haber varsa direkt göster
@@ -46,7 +55,17 @@ export class NewsDetailComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
+  startClock() {
+    setInterval(() => {
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      };
 
+      this.currentDate = now.toLocaleDateString('tr-TR', options);
+      this.currentTime = now.toLocaleTimeString('tr-TR');
+    }, 1000);
+  }
   /*ngOnInit(): void {
     const encodedUrl = this.route.snapshot.paramMap.get('encodedUrl');
 
@@ -73,6 +92,13 @@ export class NewsDetailComponent implements OnInit {
   goBack() {
     window.history.back();
   }
+
+  goToDetail(article: any) {
+    this.newsService.selectedArticle = article;
+    const encodedUrl = encodeURIComponent(article.url);
+    this.router.navigate(['/news', encodedUrl]);
+  }
+
 }
 
 

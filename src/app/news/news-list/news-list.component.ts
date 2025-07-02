@@ -24,23 +24,43 @@ export class NewsListComponent implements OnInit {
     { code: 'gbp', rate: 41.3 }
   ];  
   
-  weather: any = {
+  weatherList: any[] = []; 
+  /*weather: any = {
     city: '',
     temp: 0,
     description: ''
-  };
+  };*/
 
   // 🔸 Tarih ve saat için değişkenler
   currentDate: string = '';
   currentTime: string = '';
 
+  countries = [
+    { code: 'us', name: 'Amerika Birleşik Devletleri' },
+    { code: 'tr', name: 'Türkiye' },
+    { code: 'gb', name: 'Birleşik Krallık' },
+    { code: 'fr', name: 'Fransa' },
+    { code: 'de', name: 'Almanya' },
+    { code: 'ru', name: 'Rusya' },
+    { code: 'jp', name: 'Japonya' },
+    { code: 'cn', name: 'Çin' },
+    { code: 'in', name: 'Hindistan' },
+    // İstersen daha ekleyebilirsin
+  ];
+
+  countrySearch = '';
+  showCountryDropdown = false;
+  filteredCountries = this.countries;
+  selectedCountryCode = 'tr'; // Başlangıç olarak Türkiye seçili
+  
   constructor(private newsService: NewsService, private router: Router) { }
   
   ngOnInit(): void {
+    this.loadTopHeadlinesByCountry(this.selectedCountryCode); // Başlangıçta ülkeye göre haberler
     this.loadTopHeadlines();
     this.startClock(); // ⏰ Saat başlasın
     this.loadExchangeRates();
-    this.loadWeather();
+    this.getWeatherForCities(['Istanbul', 'Ankara', 'Izmir', 'Konya']); // 🌤️ Şehir listesi
 
     this.searchSubject.pipe(
       debounceTime(300),
@@ -71,6 +91,12 @@ export class NewsListComponent implements OnInit {
     });
   }
 
+  loadTopHeadlinesByCountry(countryCode: string) {
+    this.newsService.getTopHeadlinesByCountry(countryCode).subscribe((data: any) => {
+      this.articles = data.articles;
+      this.updateSliderArticles();
+    });
+  }
   updateSliderArticles() {
     this.sliderArticles = this.articles.slice(0, 10); // İlk 10 haberi slider yap
   }
@@ -108,6 +134,38 @@ export class NewsListComponent implements OnInit {
       }));
     });
   }
+
+  getWeatherForCities(cities: string[]) {
+    cities.forEach(city => {
+      this.newsService.getWeather(city).subscribe(data => {
+        this.weatherList.push({
+          city: data.name,
+          temp: Math.round(data.main.temp),
+          description: data.weather[0].description,
+          icon: data.weather[0].icon
+        });
+      });
+    });
+  }
+  
+  filterCountryList() {
+    const val = this.countrySearch.toLowerCase();
+    this.filteredCountries = this.countries.filter(c =>
+      c.name.toLowerCase().includes(val)
+    );
+  }
+
+  selectCountry(country: { code: string; name: string }) {
+    this.countrySearch = country.name;
+    this.selectedCountryCode = country.code;
+    this.showCountryDropdown = false;
+    this.loadTopHeadlinesByCountry(country.code);
+  }
+
+  hideDropdownWithDelay() {
+    setTimeout(() => this.showCountryDropdown = false, 200);
+  }
+
   /*loadExchangeRates() {
     this.newsService.getExchangeRates().subscribe(data => {
       this.exchangeRates = [
@@ -118,7 +176,7 @@ export class NewsListComponent implements OnInit {
     });
   }*/
 
-  loadWeather() {
+  /*loadWeather() {
     this.newsService.getWeather().subscribe((data: any) => {
       this.weather = {
         city: data.name,
@@ -127,7 +185,7 @@ export class NewsListComponent implements OnInit {
         icon: data.weather[0].icon //iconu aldık
       };
     });
-  }
+  }*/
 }
 
 

@@ -10,7 +10,6 @@
   <button [class.active]="activeCategory==='business'" (click)="filterByCategory('business')">Business</button>
   <button [class.active]="activeCategory==='sports'" (click)="filterByCategory('sports')">Sports</button>
   <button [class.active]="activeCategory==='technology'" (click)="filterByCategory('technology')">Technology</button>
-  <!-- Daha fazla kategori varsa ekle -->
 </nav>
 
 <section class="slider" *ngIf="sliderArticles.length > 0">
@@ -29,24 +28,47 @@
 
 <main class="content-area">
   <aside class="side left">
-    <h4>Döviz Kurları</h4>
+    <h3>Döviz Kurları</h3>
     <div class="exchange-card" *ngFor="let item of exchangeRates">
       <img [src]="'assets/flags/' + item.code.toLowerCase() + '.svg'" [alt]="item.code" />
-        <div>
-            <strong>{{ item.code }}</strong>: {{ item.rate | number:'1.2-2' }} ₺
-        </div>
+      <div>
+        <strong>{{ item.code }}</strong>: {{ item.rate | number:'1.2-2' }} ₺
+      </div>
     </div>
   </aside>
 
   <section class="main-news">
-    <input
-      type="text"
-      placeholder="Haber ara..."
-      [(ngModel)]="searchQuery"
-      (ngModelChange)="onSearchChange($event)"
-      class="search-input"
-    />
+    <!-- ✅ Arama çubukları: haber ve ülke arama -->
+    <div class="search-bar-row">
+      <div class="search-box">
+        <input
+          type="text"
+          placeholder="Haber ara..."
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange($event)"
+          class="search-input"
+        />
+      </div>
 
+      <div class="search-box country-filter">
+        <input
+          type="text"
+          placeholder="Ülke ara veya seç..."
+          [(ngModel)]="countrySearch"
+          (input)="filterCountryList()"
+          (focus)="showCountryDropdown = true"
+          (blur)="hideDropdownWithDelay()"
+          autocomplete="off"
+        />
+        <ul *ngIf="showCountryDropdown" class="country-dropdown">
+          <li *ngFor="let country of filteredCountries" (click)="selectCountry(country)">
+            {{ country.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Haber listesi -->
     <div class="news-list">
       <div
         class="news-card"
@@ -61,8 +83,8 @@
   </section>
 
   <aside class="side right">
-    <h4>Hava Durumu</h4>
-    <div *ngIf="weather" class="weather-info">
+    <h3>Hava Durumu</h3>
+    <div *ngFor="let weather of weatherList" class="weather-info">
       <div class="weather-text">
         <p>{{ weather.city }}</p>
         <p>{{ weather.temp }}°C - {{ weather.description }}</p>
@@ -75,6 +97,8 @@
     </div>
   </aside>
 </main>
+
+
 
 
 

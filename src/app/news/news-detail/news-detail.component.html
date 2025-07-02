@@ -1,32 +1,69 @@
-<div class="news-detail fade-in">
-  <div class="card shadow-sm">
-    <img
-      [src]="article?.urlToImage"
-      class="card-img-top"
-      alt="Haber Görseli"
-      style="height: 400px; object-fit: cover;"
-    />
-    <div class="card-body">
-      <h1 class="card-title mb-3">{{ article?.title }}</h1>
-      <p class="text-muted mb-1">
-        <strong>Yazar:</strong> {{ article?.author || 'Bilinmiyor' }}
-        <span *ngIf="article?.publishedAt">| {{ article.publishedAt | date:'dd/MM/yyyy' }}</span>
-      </p>
-      <p class="card-text" style="white-space: pre-line;">
-        {{ article?.content || article?.description }}
-      </p>
-      <a
-        [href]="article?.url"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn btn-primary mt-3"
-      >
-        Haberin Tamamını Kaynaktan Oku
-      </a>
-      <button class="btn btn-secondary mt-3 ms-2" (click)="goBack()">Geri Dön</button>
+<div class="news-detail fade-in" *ngIf="article">
+  <div class="detail-wrapper">
+    
+    <!-- SOL TARAF: Ana Detay -->
+    <div class="main-detail">
+      <!-- 🧡 Başlık ve tarih-saat -->
+      <header class="header-container">
+        <div class="datetime-header">
+          <div class="date">{{ currentDate }}</div>
+          <div class="time">{{ currentTime }}</div>
+        </div>
+        <h1 class="main-title">Haber Porta(ka)lı 🍊</h1>
+      </header>
+
+      <!-- 📰 Haber Detay Kartı -->
+      <div class="card shadow-sm">
+        <img
+          [src]="article.urlToImage"
+          class="card-img-top"
+          alt="Haber Görseli"
+        />
+
+        <div class="card-body">
+          <h1 class="card-title mb-3">{{ article.title }}</h1>
+
+          <p class="text-muted mb-1">
+            <strong>Yazar:</strong> {{ article.author || 'Bilinmiyor' }}
+            <span *ngIf="article.publishedAt">| {{ article.publishedAt | date:'dd MMMM yyyy, HH:mm':'tr-TR' }}</span>
+          </p>
+
+          <p class="card-text" style="white-space: pre-line;">
+            {{ article.content || article.description || 'Detaylı içerik bulunamadı.' }}
+          </p>
+
+          <a
+            [href]="article.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary mt-3"
+          >
+            Haberin Tamamını Kaynaktan Oku
+          </a>
+
+          <button class="btn btn-secondary mt-3 ms-2" (click)="goBack()">Geri Dön</button>
+        </div>
+      </div>
     </div>
+
+    <!-- SAĞ TARAF: Diğer Haberler -->
+    <aside class="side-news">
+      <h3>Diğer Haberler</h3>
+      <div
+        class="side-news-card"
+        *ngFor="let item of recommendedArticles"
+        (click)="goToDetail(item)"
+      >
+        <img [src]="item.urlToImage" alt="Diğer Görsel" />
+        <p>{{ item.title }}</p>
+      </div>
+    </aside>
+
   </div>
 </div>
+
+
+
 
 
 

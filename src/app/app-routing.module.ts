@@ -1,5 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+//import { LayoutComponent } from './layout/layout.component'; // Sen oluşturmuştun
+//import { NewsListComponent } from './news/news-list/news-list.component';
+//import { NewsDetailComponent } from './news/news-detail/news-detail.component';
+
+/*const routes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: '', component: NewsListComponent },
+      { path: 'news/:id', component: NewsDetailComponent }
+    ]
+  },
+  { path: '**', redirectTo: '' }
+];*/
 
 const routes: Routes = [
   { path: '', redirectTo: '/news', pathMatch: 'full' },

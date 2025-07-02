@@ -8,10 +8,12 @@ import { SharedModule } from './shared/shared.module';
 import { NewsModule } from './news/news.module';  // <--- ekle bunu
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+//import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    //LayoutComponent
   ],
   imports: [
     BrowserModule,
