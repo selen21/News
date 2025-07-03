@@ -20,41 +20,34 @@ export class NewsDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Öncelikle servis üzerinden seçilmiş haberi al
-    this.article = this.newsService.selectedArticle;
+    this.startClock();
 
-    this.newsService.getTopHeadlines().subscribe((data: any) => {
-      this.recommendedArticles = data.articles
-        .filter((item: any) => item.url !== this.article?.url) // kendisini çıkar
-        .slice(0, 10); // ilk 10 taneyi al
-      });
-
-    if (this.article) {
-      // Eğer servis üzerinden haber varsa direkt göster
-      return;
-    }
-
-    // Eğer servis üzerinden haber yoksa, URL parametresinden dene
-    const encodedUrl = this.route.snapshot.paramMap.get('encodedUrl');
-
-    if (encodedUrl) {
-      const url = decodeURIComponent(encodedUrl);
-
-      // Arama sorgusu varsa ona göre ara, yoksa genel başlıkları getir
+    // 🚨 Burada snapshot yerine paramMap.subscribe kullanıyoruz
+    this.route.paramMap.subscribe((params) => {
+      const encodedUrl = params.get('encodedUrl');
       const query = this.newsService.lastSearchQuery || '';
 
-      this.newsService.searchArticles(query).subscribe((data: any) => {
-        const matched = data.articles.find((a: any) => a.url === url);
-        if (matched) {
-          this.article = matched;
-        } else {
-          this.router.navigate(['/']);
-        }
-      });
-    } else {
-      this.router.navigate(['/']);
-    }
+      if (encodedUrl) {
+        const url = decodeURIComponent(encodedUrl);
+
+        this.newsService.searchArticles(query).subscribe((data: any) => {
+          const matched = data.articles.find((a: any) => a.url === url);
+          if (matched) {
+            this.article = matched;
+            this.loadRecommendedArticles(this.article.url);
+          } else {
+            this.router.navigate(['/']);
+          }
+        });
+      } else if (this.newsService.selectedArticle) {
+        this.article = this.newsService.selectedArticle;
+        this.loadRecommendedArticles(this.article.url);
+      } else {
+        this.router.navigate(['/']);
+      }
+    });
   }
+
   startClock() {
     setInterval(() => {
       const now = new Date();
@@ -66,28 +59,6 @@ export class NewsDetailComponent implements OnInit {
       this.currentTime = now.toLocaleTimeString('tr-TR');
     }, 1000);
   }
-  /*ngOnInit(): void {
-    const encodedUrl = this.route.snapshot.paramMap.get('encodedUrl');
-
-    if (encodedUrl) {
-      const url = decodeURIComponent(encodedUrl);
-
-      this.newsService
-        .searchArticles(this.newsService.lastSearchQuery || '')
-        .subscribe((data: any) => {
-          const matched = data.articles.find((a: any) => a.url === url);
-          if (matched) {
-            this.article = matched;
-          } else {
-            // Haber bulunamazsa anasayfaya yönlendir
-            this.router.navigate(['/']);
-          }
-        });
-    } else {
-      // URL parametresi yoksa anasayfaya yönlendir
-      this.router.navigate(['/']);
-    }
-  }*/
 
   goBack() {
     window.history.back();
@@ -99,7 +70,16 @@ export class NewsDetailComponent implements OnInit {
     this.router.navigate(['/news', encodedUrl]);
   }
 
+  loadRecommendedArticles(currentUrl: string) {
+    this.newsService.getTopHeadlines().subscribe((data: any) => {
+      this.recommendedArticles = data.articles
+        .filter((item: any) => item.url !== currentUrl && item.urlToImage && item.title)
+        .slice(0, 10);
+    });
+  }
 }
+
+
 
 
 
